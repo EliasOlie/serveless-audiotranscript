@@ -1,4 +1,6 @@
 from base64 import b64decode
+from cgi import parse_multipart, parse_header
+from io import BytesIO
 import speech_recognition as sr
 import json, os
 
@@ -27,14 +29,14 @@ def main(args):
         fo.write(multipart_data.get('audio')[0])
         fo.close()
         # Read audio file and call Watson STT API:
-            with open(
+        with open(
         os.path.join(
             os.path.dirname(__file__), './.',
             'audio_sample.flac'
         ), 'rb'
     ) as audio_file:
-        r = sr.Recognizer()
-        file = audio_file
+            r = sr.Recognizer()
+            file = audio_file
         
         with file as source:
             audio = r.record(source)
@@ -52,4 +54,3 @@ def main(args):
     except:
         pass
 
-print(main())
